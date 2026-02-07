@@ -1,0 +1,34 @@
+{
+  "addons": [
+    "heroku-postgresql:essential-0"
+  ],
+  "buildpacks": [
+    {
+      "url": "heroku/python"
+    }
+  ],
+  "env": {
+    "DJANGO_SETTINGS_MODULE": "comms.settings",
+    "SECRET_KEY": {
+      "description": "Django secret key",
+      "generator": "secret"
+    },
+    "ALLOWED_HOSTS": "*",
+    "SECURE_PROXY_SSL_HEADER": "HTTP_X_FORWARDED_PROTO,https"
+  },
+  "formation": {
+    "web": {
+      "quantity": 1,
+      "size": "basic"
+    }
+  },
+  "environments": {
+    "test": {
+      "addons": ["heroku-postgresql:in-dyno"],
+      "scripts": {
+        "test-setup": "python manage.py collectstatic --no-input",
+        "test": "flake8 && pytest"
+      }
+    }
+  }
+}

@@ -9,7 +9,8 @@ dependencies = [
     "django-environ",
     "psycopg",
     "whitenoise",
-    "sentry-sdk[django]"
+    "sentry-sdk[django]",
+    "gunicorn"
 ]
 
 
@@ -27,6 +28,10 @@ dev = [
 ]
 
 [tool.flake8]
+exclude = [
+    ".heroku",
+    ".local",
+]
 ignore = [
     "E501",  # line too long
 ]
