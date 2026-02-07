@@ -37,6 +37,7 @@ ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[])
 # Application definition
 
 INSTALLED_APPS = [
+    'users',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -143,3 +144,5 @@ if SENTRY_DSN:
         dsn=SENTRY_DSN,
         traces_sample_rate=0.01,
     )
+
+AUTH_USER_MODEL = 'users.User'
