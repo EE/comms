@@ -5,6 +5,7 @@ description = ""
 readme = "README.md"
 requires-python = ">=3.14,<4"
 dependencies = [
+    "django"
 ]
 
 
@@ -17,7 +18,8 @@ dev = [
     "flake8",
     "flake8-pyproject",
     "flake8-isort",
-    "pytest"
+    "pytest",
+    "pytest-django"
 ]
 
 [tool.flake8]
@@ -33,4 +35,6 @@ multi_line_output = 5
 include_trailing_comma = true
 
 [tool.pytest.ini_options]
+DJANGO_SETTINGS_MODULE = "comms.settings"
+FAIL_INVALID_TEMPLATE_VARS = true
 python_files = ["tests.py", "test_*.py", "*_tests.py"]
