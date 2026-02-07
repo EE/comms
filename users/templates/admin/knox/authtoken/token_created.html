@@ -1,0 +1,51 @@
+{% extends "admin/base_site.html" %}
+{% load i18n %}
+
+{% block title %}Token created{% endblock %}
+{% block content_title %}<h1>Token created successfully</h1>{% endblock %}
+
+{% block content %}
+<div class="module" style="margin-bottom: 1em;">
+  <h2>⚠️ Copy this token now — it will NOT be shown again</h2>
+  <table>
+    <tr>
+      <th style="text-align:left; padding: 8px;">Token</th>
+      <td style="padding: 8px;">
+        <code id="raw-token" style="
+          font-size: 1.1em;
+          background: #ffc;
+          padding: 6px 10px;
+          border: 2px solid #c90;
+          border-radius: 4px;
+          user-select: all;
+          display: inline-block;
+          word-break: break-all;
+        ">{{ raw_token }}</code>
+        <button type="button" onclick="
+          navigator.clipboard.writeText(document.getElementById('raw-token').textContent);
+          this.textContent='Copied ✓';
+          setTimeout(()=>this.textContent='Copy', 2000);
+        " style="margin-left: 8px; cursor: pointer;">Copy</button>
+      </td>
+    </tr>
+    <tr>
+      <th style="text-align:left; padding: 8px;">User</th>
+      <td style="padding: 8px;">{{ user }}</td>
+    </tr>
+    <tr>
+      <th style="text-align:left; padding: 8px;">Expires</th>
+      <td style="padding: 8px;">{% if expiry %}{{ expiry }}{% else %}Never{% endif %}</td>
+    </tr>
+    <tr>
+      <th style="text-align:left; padding: 8px;">Usage</th>
+      <td style="padding: 8px;">
+        <code>Authorization: Token {{ raw_token }}</code>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<div class="submit-row">
+  <a href="{% url 'admin:knox_authtoken_changelist' %}">← Back to token list</a>
+</div>
+{% endblock %}
