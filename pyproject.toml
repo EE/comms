@@ -10,7 +10,9 @@ dependencies = [
     "psycopg",
     "whitenoise",
     "sentry-sdk[django]",
-    "gunicorn"
+    "gunicorn",
+    "djangorestframework",
+    "django-rest-knox",
 ]
 
 

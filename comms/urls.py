@@ -17,10 +17,16 @@ from django.http import HttpResponse
 """
 from django.contrib import admin
 from django.http import HttpResponse
-from django.urls import path
+from django.urls import include, path
+
+from .api import extra_urls, router
 
 
 urlpatterns = [
     path('robots.txt', lambda r: HttpResponse("User-agent: *\nDisallow: /\n", content_type="text/plain")),
     path('admin/', admin.site.urls),
+
+    # API routes
+    path('api/', include(router.urls)),
+    path('api/', include(extra_urls)),
 ]
