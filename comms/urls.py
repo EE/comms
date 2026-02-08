@@ -19,11 +19,12 @@ from django.contrib import admin
 from django.http import HttpResponse
 from django.urls import include, path
 
-from .api import extra_urls, router
+from .api import extra_urls, router, skill_md
 
 
 urlpatterns = [
     path('robots.txt', lambda r: HttpResponse("User-agent: *\nDisallow: /\n", content_type="text/plain")),
+    path('skill.md', skill_md, name='skill-md'),
     path('admin/', admin.site.urls),
 
     # API routes

@@ -6,3 +6,8 @@ Rules for AI coding agents working on this codebase.
 
 - If a function is used in only one place, keep it in the calling file. Do not
   create a separate module (e.g. `services.py`) just for the sake of separation.
+
+
+
+poetry run pytest
+poetry run flake8

@@ -173,3 +173,6 @@ REST_KNOX = {
 # Configure the webhook URL in Postmark as https://<user>:<pass>@host/postmark/inbound/
 POSTMARK_WEBHOOK_USERNAME = env.str('POSTMARK_WEBHOOK_USERNAME', default='')
 POSTMARK_WEBHOOK_PASSWORD = env.str('POSTMARK_WEBHOOK_PASSWORD', default='')
+
+# Postmark – sending email
+POSTMARK_SERVER_TOKEN = env.str('POSTMARK_SERVER_TOKEN', default='')
