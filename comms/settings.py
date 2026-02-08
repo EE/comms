@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'knox',
     'users',
+    'postmark',
 ]
 
 MIDDLEWARE = [
@@ -167,3 +168,8 @@ REST_KNOX = {
     'TOKEN_LIMIT_PER_USER': 10,
     'TOKEN_TTL': datetime.timedelta(days=28),
 }
+
+# Postmark webhook – HTTP Basic Auth credentials.
+# Configure the webhook URL in Postmark as https://<user>:<pass>@host/postmark/inbound/
+POSTMARK_WEBHOOK_USERNAME = env.str('POSTMARK_WEBHOOK_USERNAME', default='')
+POSTMARK_WEBHOOK_PASSWORD = env.str('POSTMARK_WEBHOOK_PASSWORD', default='')

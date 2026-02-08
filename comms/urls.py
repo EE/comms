@@ -29,4 +29,7 @@ urlpatterns = [
     # API routes
     path('api/', include(router.urls)),
     path('api/', include(extra_urls)),
+
+    # Postmark webhooks
+    path('postmark/', include('postmark.urls')),
 ]
