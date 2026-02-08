@@ -1,15 +1,25 @@
 import uuid
 
+from django.conf import settings
 from django.db import models
+from django.utils import timezone
 
 
 class InboundEmail(models.Model):
     """An email received via the Postmark inbound webhook."""
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid7, editable=False)
+    created_at = models.DateTimeField(default=timezone.now)
+
+    # The user whose inbox this email belongs to.
+    user = models.ForeignKey(
+        settings.AUTH_USER_MODEL,
+        on_delete=models.CASCADE,
+        related_name="inbound_emails",
+    )
 
     # Postmark's unique identifier for this message.
-    message_id = models.CharField(max_length=255, unique=True)
+    message_id = models.CharField(max_length=255)
 
     # Sender
     from_email = models.EmailField()
@@ -47,10 +57,11 @@ class InboundEmail(models.Model):
         help_text="Original Date header value from the email.",
     )
 
-    created_at = models.DateTimeField(auto_now_add=True, db_index=True)
-
     class Meta:
-        ordering = ["-created_at"]
-
-    def __str__(self):
-        return f"{self.from_email}: {self.subject}" if self.subject else self.from_email
+        ordering = ["user", "-created_at"]
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user", "message_id"],
+                name="unique_user_message",
+            ),
+        ]

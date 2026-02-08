@@ -1,6 +1,7 @@
 from django.urls import path
 
-from .views import inbound_webhook
+from .inbound_webhook import inbound_webhook
+
 
 app_name = "postmark"
 
