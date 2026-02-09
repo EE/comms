@@ -86,6 +86,31 @@ def test_inbox_retrieve(client, email_in_inbox):
 
 
 @pytest.mark.django_db
+def test_inbox_retrieve_includes_headers(client, user):
+    headers_data = [
+        {"Name": "X-Spam-Tests", "Value": "DKIM_SIGNED,DKIM_VALID,SPF_PASS"},
+        {"Name": "X-Spam-Score", "Value": "-0.1"},
+    ]
+    email = InboundEmail.objects.create(
+        message_id="headers-1",
+        from_email="sender@example.com",
+        subject="With headers",
+        user=user,
+        headers=headers_data,
+    )
+    resp = client.get(f"{URL}{email.pk}/")
+    assert resp.status_code == 200
+    assert resp.json()["headers"] == headers_data
+
+
+@pytest.mark.django_db
+def test_inbox_retrieve_headers_empty_by_default(client, email_in_inbox):
+    resp = client.get(f"{URL}{email_in_inbox.pk}/")
+    assert resp.status_code == 200
+    assert resp.json()["headers"] == []
+
+
+@pytest.mark.django_db
 def test_inbox_retrieve_other_users_email_404(client, other_user):
     other_email = InboundEmail.objects.create(
         message_id="other-2",
