@@ -39,6 +39,7 @@ class InboundEmailSerializer(serializers.ModelSerializer):
             "stripped_reply",
             "tag",
             "mailbox_hash",
+            "headers",
             "date",
             "created_at",
         ]
